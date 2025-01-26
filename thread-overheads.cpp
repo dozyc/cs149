@@ -16,7 +16,7 @@ void dowork() {
     return;
 }
 
-float strategy0(int num_tasks) {
+float sequential_strategy(int num_tasks) {
     printf("\n");
     printf("TEST 0 START: %d Sequential calls\n", num_tasks);
 
@@ -91,12 +91,12 @@ void test2( int num_tasks) {
 int main() {
     printf("Apparent number of cores: %d\n", std::thread::hardware_concurrency());
 
-    float tps_0 = strategy0(NUM_TASKS);
+    float tps_seq = sequential_strategy(NUM_TASKS);
 
     auto wp = new WorkerPool(NUM_WORKER_THREADS, NUM_TASKS);
-    float tps_1 = wp->launch_tasks();
+    float tps_pool = wp->launch_tasks();
 
-    printf("WorkerPool speedup vs loop: %.3f\n", tps_1 / tps_0);
+    printf("WorkerPool speedup vs loop: %.3f\n", tps_pool / tps_seq);
 
     //test2(NUM_TASKS); // this is super slow
 
